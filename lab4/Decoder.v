@@ -16,20 +16,31 @@ module Decoder(
 );
 
 /* Write your code HERE */
-assign opcode = instr_i[6:0]
-assign funct3= 
+wire [6:0] opcode;
+wire [2:0] funct3;
 
-assign RegWrite = (instr_i == ) ? 1'b1 : 1'b0;
-assign Branch = (instr_i == ) ? 1'b1 : 1'b0;
-assign Jump = (instr_i == ) ? 1'b1 : 1'b0;
-assign WriteBack1 = (instr_i == ) ? 1'b1 : 1'b0;
-assign WriteBack0 = (instr_i == ) ? 1'b1 : 1'b0;
-assign MemRead = (instr_i == ) ? 1'b1 : 1'b0;
-assign MemWrite = (instr_i == ) ? 1'b1 : 1'b0;
-assign ALUSrcA = (instr_i == ) ? 1'b1 : 1'b0;
-assign ALUSrcB = (instr_i == ) ? 1'b1 : 1'b0;
-assign ALUOp = (instr_i == ) ? 1'b1 : 1'b0;
+assign opcode = instr_i[6:0];
+assign funct3 = instr_i[14:12];
 
+assign RegWrite = (opcode[5:2] == 4'b1000) ? 1'b0 : 1'b1;
+//only store and branch no need
+assign Branch = (opcode == 7'b1100011) ? 1'b1 : 1'b0;
+//only branch 
+assign Jump = (opcode[2:0] == 3'b111) ? 1'b1 : 1'b0;
+//only jal jalr
+assign WriteBack1 = (opcode[2:0] == 3'b111) ? 1'b1 : 1'b0;
+//only jal jalr
+assign WriteBack0 = (opcode[4:0] == 5'b10011) ? 1'b1 : 1'b0;
+//R-type and addi no need
+assign MemRead = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
+//only load need
+assign MemWrite = (opcode == 7'b0100011) ? 1'b1 : 1'b0;
+//only store need
+assign ALUSrcA = (opcode == 7'b1100111) ? 1'b1 : 1'b0;
+//only jalr
+assign ALUSrcB = (opcode[6:4] == 3'b001 || opcode[6:4] == 3'b000 || opcode[6:4] == 3'b010) ? 1'b1 : 1'b0;
+//choose imm
+assign ALUOp = (opcode[6:4] == 3'b011) ? 2'b10 : (opcode[6:4] == 3'b001) ? 2'b11 : (opcode[6:4] == 3'b110) ? 2'b10 : 2'b00;
 
 endmodule
 
