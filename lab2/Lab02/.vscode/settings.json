@@ -1,0 +1,5 @@
+{
+    "verilog.linting.linter": "iverilog",
+    "verilog.linting.iverilog.arguments": "-i",
+    "verilog.ctags.path": "ctags"
+}
