@@ -20,7 +20,7 @@ parameter aluand = 4'b0000;
 parameter aluor  = 4'b0001;
 parameter aluslt = 4'b0111;
 
-reg [4:0] alufunc;
+reg [3:0] alufunc;
 
 always @(*) begin
 	case (instr)
@@ -39,7 +39,7 @@ always @(*) begin
 		2'b01: result <= alusub;
 		2'b10: result <= alufunc;
 		2'b11: result <= aluadd;
-		default: result <= aluadd;
+		default: result <= 4'b1111;
 	endcase
 end
 
