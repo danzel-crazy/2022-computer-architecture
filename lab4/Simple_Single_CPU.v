@@ -39,7 +39,7 @@ wire [31:0] RTdata_o;
 wire [31:0] MUX_ALUSrcA_o;
 wire [31:0] Adder_PCReg_o;
 wire [31:0] alu_result;
-wire [31:0] MUX_PCSrc_o;
+// wire [31:0] MUX_PCSrc_o;
 wire [31:0] MUX_ALUSrcB_o;
 wire [31:0] Data_Memory_o;
 wire [31:0] MUX_WriteBack0_o;
@@ -98,7 +98,7 @@ Imm_Gen ImmGen(
 ALU_Ctrl ALU_Ctrl(
     .instr(ALUControlIn),
     .ALUOp(ALUOp),
-    .ALU_Ctrl_o(ALU_Ctrl)
+    .ALU_Ctrl_o(ALUControlOut)
 );
 
 MUX_2to1 MUX_ALUSrcA(
@@ -118,7 +118,7 @@ MUX_2to1 MUX_PCSrc(
     .data0_i(pcplus4),
     .data1_i(Adder_PCReg_o),
     .select_i(PCSrc),
-    .data_o(MUX_PCSrc_o)
+    .data_o(pc_i)
 );
 
 MUX_2to1 MUX_ALUSrcB(
@@ -131,8 +131,8 @@ MUX_2to1 MUX_ALUSrcB(
 alu alu(
     .rst_n(rst_i),
     .src1(RSdata_o),
-    .src2(RTdata_o),
-    .ALU_control(ALU_Ctrl),
+    .src2(MUX_ALUSrcB_o),
+    .ALU_control(ALUControlOut),
     .Zero(Zero),
     .result(alu_result)
 );
@@ -147,8 +147,8 @@ Data_Memory Data_Memory(
 );
 
 MUX_2to1 MUX_WriteBack0(
-    .data0_i(Data_Memory_o),
-    .data1_i(alu_result),
+    .data0_i(alu_result),
+    .data1_i(Data_Memory_o),
     .select_i(WriteBack0),
     .data_o(MUX_WriteBack0_o)
 );

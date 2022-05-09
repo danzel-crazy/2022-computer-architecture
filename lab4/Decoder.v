@@ -30,7 +30,7 @@ assign Jump = (opcode[2:0] == 3'b111) ? 1'b1 : 1'b0;
 //only jal jalr
 assign WriteBack1 = (opcode[2:0] == 3'b111) ? 1'b1 : 1'b0;
 //only jal jalr
-assign WriteBack0 = (opcode[4:0] == 5'b10011) ? 1'b1 : 1'b0;
+assign WriteBack0 = (opcode[6:4] == 3'b011 || opcode[6:4] == 3'b001) ?1'b0 : 1'b1 ;
 //R-type and addi no need
 assign MemRead = (opcode == 7'b0000011) ? 1'b1 : 1'b0;
 //only load need
