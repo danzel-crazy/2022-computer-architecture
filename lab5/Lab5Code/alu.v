@@ -10,4 +10,17 @@ module alu(
 );
 
 /* Write your code HERE */
+assign Zero = (result == 32'b0);
+
+always @(*) begin
+        case (ALU_control)
+            4'b0010: result <= src1 + src2;
+            4'b0110: result <= src1 - src2;
+            4'b0000: result <= src1 & src2;
+            4'b0001: result <= src1 | src2;
+            4'b0111: result <= {31'b0, (src1 < src2)};
+            default: result <= result;
+        endcase
+end
+
 endmodule

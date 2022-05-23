@@ -49,6 +49,7 @@ wire [31:0] IFID_Instr_o;
 wire IFID_Write;
 wire IFID_Flush;
 wire [31:0]IFID_PC_Add4_o;
+wire [32-1:0] Imm_4 = 4;
 
 //IDEXE
 wire [31:0] IDEXE_Instr_o;
@@ -83,44 +84,127 @@ wire [31:0] MEMWB_PC_Add4_o;
 
 
 // IF
-MUX_2to1 MUX_PCSrc(
+MUX_2to1 MUX_PCSrc( //finish
+    .data0_i(PC_Add4),
+    .data1_i(PC_Add_Immediate),
+    .select_i(~IFID_Flush),
+    .data_o(PC_i)
 );
 
-ProgramCounter PC(
+ProgramCounter PC( //finish
+    .clk_i(clk_i),
+    .rst_i(rst_i),
+    .PCWrite(PC_write),
+    .pc_i(PC_i),
+    .pc_o(PC_o)
 );
 
-Adder PC_plus_4_Adder(
+Adder PC_plus_4_Adder( //finish
+    .src1_i(pc_o),
+    .src2_i(Imm_4),
+    .sum_o(PC_Add4)
 );
 
-Instr_Memory IM(
+Instr_Memory IM( //finish
+    .addr_i(pc_o),
+    .instr_o(instr)
 );
 
-IFID_register IFtoID(
+IFID_register IFtoID( //finish
+    .clk_i(clk_i),
+    .rst_i(rst_i),
+    .flush(IFID_Flush),
+    .IFID_write(IFID_Write),
+    .address_i(PC_o),
+    .instr_i(instr),
+    .pc_add4_i(PC_Add4),
+    .address_o(IFID_PC_o),
+    .instr_o(IFID_Instr_o),
+    .pc_add4_o(IFID_PC_Add4_o)
 );
 
 // ID
-Hazard_detection Hazard_detection_obj(
+Hazard_detection Hazard_detection_obj( //finish
+    .IFID_regRs(IFID_Instr_o[19:15]),
+    .IFID_regRt(IFID_Instr_o[24:20]),
+    .IDEXE_regRd(IDEXE_Instr_11_7_o),
+    .IDEXE_memRead(IDEXE_Mem_o),
+    .PC_write(PC_write),
+    .IFID_write(IFID_Write),
+    .control_output_select(MUXControl)
 );
 
-MUX_2to1 MUX_control(
+MUX_2to1 MUX_control( 
+    .data0_i(),
+    .data1_i(32'b10),
+    .select_i(MUXControl),
+    .data_o()
 );
 
-Decoder Decoder(
+Decoder Decoder( //finish
+    .instr_i(IFID_Instr_o[6:0]),
+    .RegWrite(RegWrite),
+    .Branch(Branch),
+    .Jump(Jump),
+    .MemRead(MemRead),
+    .MemWrite(MemWrite),
+    .ALUSrc(ALUSrc),
+    .ALUOp(ALUOp),
+    .MemtoReg(MemtoReg)
 );
 
 Reg_File RF(
+    .clk_i(clk_i),
+    .rst_i(rst_i),
+    .RSaddr_i(IFID_Instr_o[19:15]),
+    .RTaddr_i(IFID_Instr_o[24:20]),
+    .RDaddr_i(MEMWB_Instr_11_7_o),
+    .RDdata_i(MUXMemtoReg_o),
+    .RegWrite_i(RegWrite),
+    .RSdata_o(RSdata_o),
+    .RTdata_o(RTdata_o)
 );
 
 Imm_Gen ImmGen(
+    .instr_i(IFID_Instr_o),
+    .Imm_Gen_o(Imm_Gen_o)
 );
 
 Shift_Left_1 SL1(
+    .data_i(Imm_Gen_o),
+    .data_o(IDEXE_ImmGen_o)
 );
 
 Adder Branch_Adder(
+    .src1_i(IFID_PC_o),
+    .src2_i(IDEXE_ImmGen_o),
+    .sum_o(PC_Add_Immediate)
 );
 
 IDEXE_register IDtoEXE(
+    clk_i(clk_i),
+    rst_i(rst_i),
+    instr_i(),
+    WB_i,
+    Mem_i,
+    Exe_i,
+    data1_i,
+    data2_i,
+    immgen_i,
+    alu_ctrl_instr,
+    WBreg_i,
+    pc_add4_i,
+
+    instr_o,
+    WB_o,
+    Mem_o,
+    Exe_o,
+    data1_o,
+    data2_o,
+    immgen_o,
+    alu_ctrl_input,
+    WBreg_o,
+    pc_add4_o
 );
 
 // EXE
