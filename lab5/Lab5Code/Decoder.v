@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module Decoder(
-    input [32-1:0]  instr_i,
+    input [7-1:0]  instr_i,
     output reg         Branch,
     output reg         ALUSrc,
     output reg         RegWrite,
@@ -21,7 +21,6 @@ wire    [9:0]       Ctrl_o;
 
 /* Write your code HERE */
 assign opcode = instr_i[6:0];
-assign funct3 = instr_i[14:12];
 
 always @(*) begin
     RegWrite <= (opcode[5:2] == 4'b1000) ? 1'b0 : 1'b1;
@@ -43,10 +42,3 @@ always @(*) begin
 end
 
 endmodule
-
-
-
-
-
-
-
