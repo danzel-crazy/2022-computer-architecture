@@ -11,20 +11,20 @@ module ForwardingUnit (
 );
 /* Write your code HERE */
 always @(*) begin
-    if(EXEMEM_RegWrite && EXEMEM_RD != 0 && (EXEMEM_RD == IDEXE_RS1))begin
+    if(EXEMEM_RegWrite && EXEMEM_RD != 5'b0 && (EXEMEM_RD == IDEXE_RS1))begin
         ForwardA <= 2'b10;
     end
-    else if(MEMWB_RegWrite && MEMWB_RD != 0 && (MEMWB_RD == IDEXE_RS1 && EXEMEM_RD != IDEXE_RS1))begin
+    else if(MEMWB_RegWrite && MEMWB_RD != 5'b0 && (EXEMEM_RD != IDEXE_RS1) && (MEMWB_RD == IDEXE_RS1))begin
         ForwardA <= 2'b01;        
     end
     else begin
         ForwardA <= 2'b00;
     end
     
-    if(EXEMEM_RegWrite && EXEMEM_RD != 0 && (EXEMEM_RD == IDEXE_RS2))begin
+    if(EXEMEM_RegWrite && EXEMEM_RD != 5'b0 && (EXEMEM_RD == IDEXE_RS2))begin
         ForwardB <= 2'b10;
     end
-    else if(MEMWB_RegWrite && MEMWB_RD != 0 && (MEMWB_RD == IDEXE_RS2 && EXEMEM_RD != IDEXE_RS2))begin
+    else if(MEMWB_RegWrite && MEMWB_RD != 5'b0 && (EXEMEM_RD != IDEXE_RS2) && (MEMWB_RD == IDEXE_RS2))begin
         ForwardB <= 2'b01;        
     end
     else begin
