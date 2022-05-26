@@ -1,5 +1,5 @@
 $date
-	Thu May 26 17:23:49 2022
+	Fri May 27 01:54:12 2022
 $end
 $version
 	Icarus Verilog
@@ -30,7 +30,7 @@ $var wire 32 0 PC_Add4 [31:0] $end
 $var wire 1 1 MemtoReg $end
 $var wire 1 2 MemWrite $end
 $var wire 1 3 MemRead $end
-$var wire 8 4 MUX_control_o [7:0] $end
+$var wire 32 4 MUX_control_o [31:0] $end
 $var wire 32 5 MUXMemtoReg_o [31:0] $end
 $var wire 1 6 MUXControl $end
 $var wire 32 7 MUXALUSrc_o [31:0] $end
@@ -243,10 +243,10 @@ $var wire 32 n" data0_i [31:0] $end
 $var reg 32 o" data_o [31:0] $end
 $upscope $end
 $scope module MUX_control $end
-$var wire 8 p" data0_i [7:0] $end
-$var wire 8 q" data1_i [7:0] $end
+$var wire 32 p" data0_i [31:0] $end
+$var wire 32 q" data1_i [31:0] $end
 $var wire 1 6 select_i $end
-$var reg 8 r" data_o [7:0] $end
+$var reg 32 r" data_o [31:0] $end
 $upscope $end
 $scope module PC $end
 $var wire 1 , PC_write $end
@@ -308,7 +308,7 @@ bx t"
 bx s"
 b0 r"
 b0 q"
-bx p"
+b0xxxxxxxx p"
 bx o"
 bx n"
 bx m"
@@ -670,13 +670,13 @@ b1 #
 0!
 1"
 #75000
-b10 /"
+b1 /"
 b11 1"
 b1000 /
 b1000 i
 b1000 m"
-b1100010 4
-b1100010 r"
+b1100001 4
+b1100001 r"
 b1000 .
 b1000 o"
 b1000 s"
@@ -689,10 +689,10 @@ b100 6"
 b100 O"
 b100 !#
 01
-b10 `
-b10 r
+b1 `
+b1 r
 0^
-b1100010 p"
+b1100001 p"
 1=
 b1000 0
 b1000 C"
@@ -750,6 +750,9 @@ b11 r
 1^
 b100111 p"
 0=
+b110 [
+b110 d
+b110 ##
 b1100 0
 b1100 C"
 b1100 n"
@@ -764,7 +767,7 @@ b0 |"
 b10011 q
 b10011 p
 b0 -"
-b10 a
+b1 a
 0\"
 b1000 &"
 1$"
@@ -793,8 +796,8 @@ b1 <"
 b100 K
 b100 @"
 b100 ["
-b10 L
-b10 9"
+b1 L
+b1 9"
 b11 C
 b11 x
 b11 ;"
@@ -815,6 +818,9 @@ b10000 s"
 b1010 (
 b1010 h
 b1010 "#
+b10 [
+b10 d
+b10 ##
 b101 >
 b101 6"
 b101 O"
@@ -2079,8 +2085,8 @@ b100001 #
 bx /"
 bx 0"
 bx 1"
-bx 4
-bx r"
+b0xxxxxxxx 4
+b0xxxxxxxx r"
 b10000000 .
 b10000000 o"
 b10000000 s"
@@ -2093,7 +2099,7 @@ x2
 x3
 x=
 xY
-bx p"
+b0xxxxxxxx p"
 x)
 b10000000 /
 b10000000 i

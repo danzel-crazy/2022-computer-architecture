@@ -20,7 +20,7 @@ always @(posedge clk_i) begin
     end
     else if(flush)begin
         address_o <= 32'b0;
-        instr_o   <= 32'b00000000000000000000000000010011;
+        instr_o   <= 32'b00000000000000000000000000010011; // addi x0 x0 0
         pc_add4_o <= 32'b0;
     end
     else if(IFID_write)begin

@@ -24,9 +24,7 @@ always @(*) begin
             4'b0001: result <= src1 | src2;
             4'b0111: result <= {31'b0, (src1 < src2)};
             4'b1000: result <= src1 ^ src2;   //xor
-            4'b1001: result <= src1 >>> src2;  //sra
             4'b1010: result <= src1 << src2; //sll
-            4'b1011: result <= src1 >> src2;  //srl
             default: result <= result;
         endcase
     end

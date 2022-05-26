@@ -10,7 +10,6 @@ module Decoder(
     output reg         MemWrite,
     output reg         MemtoReg,
     output reg         Jump
-    
 );
 
 //Internal Signals

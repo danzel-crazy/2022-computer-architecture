@@ -20,7 +20,7 @@ wire [31:0] RTdata_o;
 wire [31:0] Imm_Gen_o;
 wire [31:0] ALUSrc1_o;
 wire [31:0] ALUSrc2_o;
-wire [7:0]  MUX_control_o;
+wire [31:0]  MUX_control_o;
 
 wire [31:0] PC_Add_Immediate;
 wire [1:0] ALUOp;
@@ -139,14 +139,14 @@ Hazard_detection Hazard_detection_obj( //finish
     .control_output_select(MUXControl)
 );
 
-MUX_2to1_8bit MUX_control( 
-    .data0_i({MemtoReg, Jump, RegWrite, MemRead, MemWrite, ALUSrc, ALUOp}), 
-    .data1_i(8'b0),
+MUX_2to1 MUX_control( 
+    .data0_i({{24{1'b0}},{MemtoReg, Jump, RegWrite, MemRead, MemWrite, ALUSrc, ALUOp}}), 
+    .data1_i(32'b0),
     .select_i(MUXControl),
     .data_o(MUX_control_o)
 );
 
-Decoder Decoder( //finish
+Decoder Decoder(
     .instr_i(IFID_Instr_o[6:0]),
     .Branch(Branch),
     .ALUSrc(ALUSrc),

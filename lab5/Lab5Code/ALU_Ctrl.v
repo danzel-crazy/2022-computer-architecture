@@ -15,9 +15,7 @@ parameter aluand = 4'b0000;
 parameter aluor  = 4'b0001;
 parameter aluslt = 4'b0111;
 parameter aluxor = 4'b1000;
-parameter alusra = 4'b1001;
 parameter alusll = 4'b1010;
-parameter alusrl = 4'b1011;
 
 reg [3:0] alufunc;
 
@@ -28,7 +26,6 @@ always @(*) begin
 		3'b000  : alufunct3 <= aluadd; //addi
 		3'b001  : alufunct3 <= alusll; //slli
 		3'b010  : alufunct3 <= aluslt; //slti
-		3'b101  : alufunct3 <= alusrl; //srli
 	endcase
 end
 
@@ -40,8 +37,6 @@ always @(*) begin
 		4'b0110 : alufunc <= aluor;
 		4'b0010 : alufunc <= aluslt;
 		4'b0100 : alufunc <= aluxor;
-		4'b1101 : alufunc <= alusra;
-		4'b0001 : alufunc <= alusll;
 	endcase
 end
 

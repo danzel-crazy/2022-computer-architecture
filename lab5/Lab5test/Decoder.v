@@ -10,7 +10,6 @@ module Decoder(
     output reg         MemWrite,
     output reg         MemtoReg,
     output reg         Jump
-    
 );
 
 //Internal Signals
@@ -35,7 +34,7 @@ always @(*) begin
     //only store need
     ALUSrc   <= (opcode[6:4] == 3'b001 || opcode[6:4] == 3'b000 || opcode[6:4] == 3'b010) ? 1'b1 : 1'b0;
     //choose imm
-    ALUOp    <= (opcode[6:4] == 3'b011) ? 2'b10 : (opcode[6:4] == 3'b001) ? 2'b11 : (opcode[6:4] == 3'b110) ? 2'b10 : 2'b00;
+    ALUOp    <= (opcode[6:4] == 3'b011) ? 2'b10 : (opcode[6:4] == 3'b001) ? 2'b11 : (opcode[6:4] == 3'b110) ? 2'b01 : 2'b00;
 
     MemtoReg <= (opcode[6:4] == 3'b000 || opcode[4:2] == 3'b001)? 1'b1 : 1'b0 ;
     //only load  jalr 

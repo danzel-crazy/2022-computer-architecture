@@ -22,8 +22,8 @@ always @(*) begin
         7'b0000011 : Imm_Gen_o <= {{21{instr_i[31]}}, instr_i[30:20]}; //lw
         7'b1100111 : Imm_Gen_o <= {{21{instr_i[31]}}, instr_i[30:20]}; //jalr
         7'b0100011 : Imm_Gen_o <= {{21{instr_i[31]}}, instr_i[30:25], instr_i[11:7]}; //sw
-        7'b1100011 : Imm_Gen_o <= {1'b0, {20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8]}; //beq need shift left 1 bit
-        7'b1101111 : Imm_Gen_o <= {1'b0, {12{instr_i[31]}}, instr_i[19:12], instr_i[20] , instr_i[30:21]}; //jal need shift left 1 bit
+        7'b1100011 : Imm_Gen_o <= {1'b0, {20{instr_i[31]}}, instr_i[7], instr_i[30:25], instr_i[11:8]}; //beq 
+        7'b1101111 : Imm_Gen_o <= {1'b0, {12{instr_i[31]}}, instr_i[19:12], instr_i[20] , instr_i[30:21]}; //jal 
         default    : Imm_Gen_o <= 0;
     endcase    
 end
