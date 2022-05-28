@@ -29,8 +29,9 @@ always @(posedge clk_i) begin
         pc_add4_o <= pc_add4_i;
     end
     else begin
-        address_o <= 32'b0;
-        pc_add4_o <= 32'b0;
+        address_o <= address_o;
+        instr_o   <= instr_o;
+        pc_add4_o <= pc_add4_o;
     end
 end
 endmodule
