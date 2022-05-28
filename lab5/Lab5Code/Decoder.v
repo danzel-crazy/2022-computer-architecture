@@ -36,7 +36,7 @@ always @(*) begin
     //choose imm
     ALUOp    <= (opcode == 7'b0110011) ? 2'b10 : (opcode == 7'b0010011) ? 2'b11 : (opcode == 7'b1100011) ? 2'b01 : 2'b00;
 
-    MemtoReg <= (opcode == 7'b0000011 || opcode[4:2] == 3'b001)? 1'b1 : 1'b0 ;
+    MemtoReg <= (opcode == 7'b0000011 || opcode == 7'b1100111)? 1'b1 : 1'b0 ;
     //only load  jalr 
 end
 
