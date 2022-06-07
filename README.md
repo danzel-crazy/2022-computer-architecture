@@ -4,3 +4,4 @@
 * Lab03 Simple Single Cycle CPU  <br>
 * Lab04 Single Cycle CPU <br>
 * Lab05 5-Stage Pipeline Processor <br>
+* Lab06 Cache Simulator <br>
